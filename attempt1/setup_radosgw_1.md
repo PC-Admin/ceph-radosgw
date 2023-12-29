@@ -18,7 +18,7 @@ ceph03.bestozvapes.com
 
 ## Running the Bootstrap Command
 
-```
+```bash
 root@ceph01:~# cephadm bootstrap --mon-ip 10.1.50.1
 ...
 
@@ -43,7 +43,7 @@ Or, if you are only running a single cluster on this host:
 ## Lost Password
 
 If you loose the password you can set it from a files contents like so:
-```
+```bash
 root@ceph01:~# nano ./admin-password
 root@ceph01:~# ceph dashboard ac-user-set-password admin -i ./admin-password
 ```
@@ -55,7 +55,7 @@ https://docs.ceph.com/en/latest/cephadm/host-management/#cephadm-adding-hosts
 
 First we need to copy over the clusters SSH key to every other hosts...
 
-```
+```bash
 root@ceph01:~# cat /etc/ceph/ceph.pub
 ssh-rsa AAAAB3NzaC1yc2...
 
@@ -65,7 +65,7 @@ root@ceph03:~# echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwtrKW+pLmIWHGdd9tI9G
 ```
 
 Then we can tell our bootstrap node add these other hosts.
-```
+```bash
 root@ceph01:~# ceph orch host ls
 HOST    ADDR       LABELS  STATUS  
 ceph01  10.1.50.1  _admin          
@@ -86,7 +86,8 @@ ceph03  10.1.50.3  _admin
 
 
 ## Ensure 3x Monitors Exist on the Right Hosts
-```
+
+```bash
 root@ceph01:~# ceph -s
   cluster:
     id:     b4d18f96-a568-11ee-bd7b-2736aff7e7d1
@@ -112,7 +113,7 @@ Yup, 3x monitors in the right places.
 
 /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1 (64GB) on all 3x hosts.
 
-```
+```bash
 root@ceph01:~# ceph orch daemon add osd ceph01:/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1
 Created osd(s) 0 on host 'ceph01'
 root@ceph01:~# ceph orch daemon add osd ceph02:/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1
@@ -139,7 +140,8 @@ root@ceph01:~# ceph -s
 
 
 ## Looks good, lets make all 3x hosts a manager
-```
+
+```bash
 root@ceph01:~# ceph orch apply mgr ceph01,ceph02,ceph03
 Scheduled mgr update...
 ```
@@ -147,7 +149,7 @@ Scheduled mgr update...
 
 ## Label Designated Gateways
 
-```
+```bash
 root@ceph01:~# ceph orch host label add ceph01 rgw
 Added label rgw to host ceph01
 root@ceph01:~# ceph orch host label add ceph02 rgw
@@ -158,7 +160,8 @@ Added label rgw to host ceph03
 
 
 ## Deploy RADOS Gateway
-```
+
+```bash
 root@ceph01:~# ceph orch apply rgw test_rgw --placement="label:rgw" --port=8000
 Scheduled rgw.test_rgw update...
 
@@ -182,7 +185,8 @@ root@ceph01:~# ceph -s
 
 
 ## Ensure rgw is running on all 3x hosts
-```
+
+```bash
 root@ceph01:~# ceph orch ps | grep rgw
 rgw.test_rgw.ceph01.jtqjgh  ceph01  *:8000       running (52s)    47s ago  52s    16.6M        -  17.2.7   4c9b44e95067  c835bd88235d  
 rgw.test_rgw.ceph02.beryyn  ceph02  *:8000       running (53s)    47s ago  53s    16.3M        -  17.2.7   4c9b44e95067  37ac0a562013  
@@ -192,7 +196,7 @@ rgw.test_rgw.ceph03.xfrpce  ceph03  *:8000       running (54s)    47s ago  54s  
 
 ## Create a User with Access and Secret Keys
 
-```
+```bash
 root@ceph01:~# radosgw-admin user create --uid="myuser" --display-name="My User"
 {
     "user_id": "myuser",
