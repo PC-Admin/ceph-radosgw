@@ -243,3 +243,4 @@ root@ceph01:~# radosgw-admin user create --uid="myuser" --display-name="My User"
 
 Through the Ceph Dashboard GUI, create a bucket called 'bucket1' for user 'myuser'.
 
+![Screenshot from 2023-12-28 18-58-52](https://github.com/PC-Admin/ceph-radosgw/assets/29645145/1efe4b74-8d11-46e6-a084-3bb53f1466d3)
