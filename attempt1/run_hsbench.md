@@ -58,7 +58,7 @@ OPTIONS:
 ## Run hsbench
 
 Below is an example run of the benchmark using a 10s test duration, 10 threads, 10 buckets, and a 4K object size against a Ceph RadosGW:
-```
+```bash
 $ ./hsbench -a 829PO8ABIDBXCRXWDRKQ -s kyxEWNRWotUiR4qgmFTwDCMwPqS9AttmSOM0JEKy -u http://ceph01:8000 -z 4K -d 10 -t 10 -b 10
 2023/12/29 13:05:05 Hotsauce S3 Benchmark Version 0.1
 2023/12/29 13:05:05 Parameters:
